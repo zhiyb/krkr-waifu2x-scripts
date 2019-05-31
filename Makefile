@@ -20,7 +20,7 @@ GPUJOBS	?= 3
 # https://github.com/lltcggie/waifu2x-caffe
 WAIFU	:= /mnt/c/Programs/Miscellaneous/waifu2x-caffe/waifu2x-caffe-cui.exe
 WFARGS	:= -m noise_scale -s $(SCALE) -n 0 -y cunet -c 128 -b 1
-WFVARGS	:= -m noise_scale -s $(SCALE) -n 3 -y cunet -c 128 -b 1
+WFVARGS	:= -m noise_scale -s $(SCALE) -n 0 -y cunet -c 128 -b 1
 # https://github.com/UlyssesWu/FreeMote
 PSBDEC	:= /mnt/c/Games/galgame/Tools/FreeMoteToolkit/PsbDecompile.exe
 PSBENC	:= /mnt/c/Games/galgame/Tools/FreeMoteToolkit/PsBuild.exe -double
@@ -74,6 +74,10 @@ all: $(TRG)
 else
 all: $(TRG)
 endif
+
+.PHONY: patch
+patch: all
+	./scripts/patch.sh "$(IN)" "$(OUT)" "$(PATCH)"
 
 ifeq ($(STAGE), gpu)
 $(OUT)/%.PNG: $(IN)/%.PNG $(UPDIMG)
