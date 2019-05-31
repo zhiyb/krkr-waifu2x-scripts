@@ -1,0 +1,3 @@
+#!/bin/bash
+scale="$1"
+perl -wpe 's/(\bxpos\b|\bypos\b|\bvibration\b|\bvague\b|\bwidth\b|\bheight\b|"emotionX"|"emotionY")([^,]*?)(\d+)/$1.$2.$3*'$scale'/eg' | perl -wpe 's/("originx"|"originy"|"width"|"height"|"noise")([^,]*?,[^,]*?)(\d+)/$1.$2.$3*'$scale'/eg' | perl -wpe 's/(\bstart\b|\bvalue\b|\bmax\b)([^,]*?)(\d+)/$1.$2.$3*'$scale'/eg if /(\bleft\b|\btop\b|\bright\b|\bbottom\b|\btilex\b|\btiley\b).*("MoveAction"|"LoopMoveAction")/' | perl -wpe 's/\d+/$&*'$scale'/eg if /\bleft[^,]*?PathAction\b/' | perl -wpe 's/(\()(-?\d+)([^\)]+?)(-?\d+)([^\)]+?\))/$1.($2*'$scale').$3.($4*'$scale').$5/eg if /"path"/'
