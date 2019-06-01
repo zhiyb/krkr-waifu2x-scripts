@@ -211,6 +211,10 @@ $(OUT)/%/emotion.txt: $(IN)/%/emotion.txt
 $(OUT)/%.asd: $(IN)/%.asd
 	iconv -f $(CHARENC) -t UTF-8 $< | perl -wpe 's/\d+/$$&*$(SCALE)/eg if /clip|copy/' | iconv -f UTF-8 -t $(CHARENC) > $@
 
+# Particle effects
+$(OUT)/image/particle%.tjs: $(IN)/image/particle%.tjs
+	iconv -f $(CHARENC) -t UTF-8 $< | perl -wpe 's/(patsp|speed|x|y|vibsz)([^"]*")(-?\d+)\/(-?\d+)"/$$1.$$2.($$3*$(SCALE))."\/".($$4*$(SCALE))."\""/eg' | perl -wpe 's/(-?\d+)/$$&*$(SCALE)/eg if /term:/' | iconv -f UTF-8 -t $(CHARENC) > $@
+
 # AlphaMovie
 ifeq ($(STAGE), prepare)
 $(TMPOUT)/%/: $(IN)/%.amv

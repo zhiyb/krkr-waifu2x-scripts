@@ -2,7 +2,7 @@
 in="$1"
 out="$2"
 patch="$3"
-dirs="data evimage fgimage video voice scenarios scripts"
+dirs="data evimage fgimage video voice script"
 
 (cd $patch; rm -rf $dirs; mkdir -p $dirs)
 diff -qr "$in" "$out" | grep -v "^Only in $in" | while read line; do
@@ -19,8 +19,7 @@ diff -qr "$in" "$out" | grep -v "^Only in $in" | while read line; do
 	esac
 	if [ x"$type" == x"data" ]; then
 		case "${file##*.}" in
-			tjs | ks ) type=scripts;;
-			scn ) type=scenarios;;
+			tjs | ks | scn ) type=script;;
 		esac
 	fi
 	echo "$file => $patch/$type/"
