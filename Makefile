@@ -1,7 +1,6 @@
 IN	= dump
 OUT	= data
 PATCH	= patch
-TODO	= todo.txt
 
 TMPIN	= tmpin
 TMPOUT	= tmpout
@@ -64,7 +63,6 @@ include gmsl
 .PHONY: all
 ifeq ($(STAGE),)
 all: $(TRG)
-	> $(TODO)
 	$(MAKE) STAGE=dir
 	$(MAKE) STAGE=prepare
 	./scripts/amv.sh "$(AMVDEC)"
