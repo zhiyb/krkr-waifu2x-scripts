@@ -202,6 +202,10 @@ endif
 # Character stand
 $(OUT)/%.stand: $(IN)/%.stand
 	iconv -f $(CHARENC) -t UTF-8 $< | perl -wpe 's/\d+/$$&*$(SCALE)/eg if /xoff|yoff|offset/' | iconv -f UTF-8 -t $(CHARENC) > $@
+$(OUT)/fgimage/%.txt: $(IN)/fgimage/%.txt.txt
+	iconv -f $(LYRENC) -t UTF-8 $< | ./scripts/charlayer.sh $(SCALE) | iconv -f UTF-8 -t $(LYRENC) > $@
+$(OUT)/%.sinfo: $(IN)/%.sinfo
+	cp "$<" "$@"
 
 # Character emotion offset
 $(OUT)/%/emotion.txt: $(IN)/%/emotion.txt
@@ -250,10 +254,16 @@ endif
 
 # Copy files
 ifneq ($(STAGE),)
-$(OUT)/%.ogg: $(IN)/%.ogg
-	cp "$<" "$@"
-$(OUT)/%.mpg: $(IN)/%.mpg
-	cp "$<" "$@"
+CPEXT	:= .ogg .ogg.sli .mpg .ttf .otf \
+	   .stage .ini .csv .txt \
+	   .tjs .func .ks
+
+define CPRULE
+$$(OUT)/%$(1): $$(IN)/%$(1)
+	cp "$$<" "$$@"
+endef
+
+$(foreach ext,$(CPEXT),$(eval $(call CPRULE,$(ext))))
 endif
 
 # Extra
