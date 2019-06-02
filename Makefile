@@ -75,6 +75,7 @@ endif
 
 .PHONY: patch
 patch: all
+	mkdir -p $(PATCH)
 	./scripts/patch.sh "$(IN)" "$(OUT)" "$(PATCH)"
 
 ifeq ($(STAGE), gpu)
