@@ -241,6 +241,9 @@ endif
 
 # Scripts
 $(OUT)/%/macro.ks: $(IN)/%/macro.ks
+	# Note: Some specific cases where this works, but TODO need a better matching method:
+	# [bg xpos=&@"@+${mp.movex!==void?mp.movex:300}*${mp.mag!==void?mp.mag:3}"]
+	# [ソフィーティア opacity=0 xpos=@*0.999 ypos=@*0.999 time=2500]
 	iconv -f $(CHARENC) -t UTF-8 $< | perl -wpe 's/(\bxpos\b|\bypos\b|\bsize\b|\bvague\b|\bwidth\b|\bheight\b|\bblur\b|\bblurx\b|\bblury\b|\bhmax\b|\bvmax\b)(=[^ \d]*)(\d+)/$$1.$$2.$$3*'$(SCALE)'/eg' | iconv -f UTF-8 -t $(CHARENC) > $@
 
 $(OUT)/%/custom.ks: $(IN)/%/custom.ks
