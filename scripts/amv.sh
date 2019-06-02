@@ -7,7 +7,7 @@ amvdec="$1"
 # Convert filename to lower case
 (cd "$amvdec/data/video"; for f in *.amv; do
 	ff="${f,,}"	# Convert to lower case
-	[ x"$f" == x"$ff" ] || mv "$f" "$ff"
+	[ x"$f" == x"$ff" ] || { mv "$f" "$f".tmp && mv "$f".tmp "$ff"; }
 done)
 
 cat - > "$amvdec/data/scenario/first.ks" <<DOC
