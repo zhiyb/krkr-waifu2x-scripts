@@ -10,7 +10,7 @@ amvdec="$1"
 	[ x"$f" == x"$ff" ] || { mv "$f" "$f".tmp && mv "$f".tmp "$ff"; }
 done)
 
-cat - > "$amvdec/data/scenario/first.ks" <<DOC
+cat - <<DOC | iconv -f UTF-8 -t Shift_JIS > "$amvdec/data/scenario/first.ks"
 [wait time=200]
 [iscript]
 System.setArgument("-contfreq", 480);
@@ -28,6 +28,11 @@ done)
 System.exit();
 [endscript]
 DOC
-$amvdec/AlphaMovieDecoderFake.exe
+
+#$amvdec/AlphaMovieDecoderFake.exe
+"/mnt/c/Programs/Locale Emulator/LEProc.exe" -run 'C:\Games\galgame\Tools\krkr\AlphaMovieDecoder\AlphaMovieDecoderFake\AlphaMovieDecoderFake.exe' -readencoding=Shift_JIS -contfreq=0
+
+echo "Press enter when AMV finished..."
+read
 
 rm -f "$amvdec/data/video/"*.amv

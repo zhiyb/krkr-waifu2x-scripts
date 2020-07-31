@@ -26,7 +26,10 @@ PSBENC	:= /mnt/c/Games/galgame/Tools/FreeMoteToolkit/PsBuild.exe -double
 # https://github.com/zhiyb/AlphaMovieDecoder
 AMVDEC	:= /mnt/c/Games/galgame/Tools/krkr/AlphaMovieDecoder/AlphaMovieDecoderFake
 # https://github.com/zhiyb/AlphaMovieEncoder
-AMVENC	:= /mnt/c/Games/galgame/Tools/krkr/alphamovie/AlphaMovieEncoder/amenc.exe --png --zlib --rate 30 --scale 1 --quality 95
+#AMVENC	:= /mnt/c/Games/galgame/Tools/krkr/alphamovie/AlphaMovieEncoder/amenc.exe --png --zlib --rate 30 --scale 1 --quality 95
+#AMVENC	:= "/mnt/c/Programs/Locale Emulator/LEProc.exe" -run 'C:\Games\galgame\Tools\krkr\alphamovie\AlphaMovieEncoder\amenc.exe' --png --zlib --rate 30 --scale 1 --quality 95
+AMVENC	:= ./scripts/amvenc.sh
+AMVENCA	:= --png --zlib --rate 30 --scale 1 --quality 95
 # https://github.com/vn-tools/arc_unpacker
 AU	:= ~/bin/arc_unpacker
 # https://github.com/zhiyb/png2tlg
@@ -233,7 +236,7 @@ $(OUT)/%.amv: $(TMPIN)/%/
 	@
 else ifeq ($(STAGE), final)
 $(OUT)/%.amv: $(TMPOUT)/%/
-	$(AMVENC) "$<" "$@"
+	$(AMVENC) "$<" "$@" $(AMVENCA)
 else
 $(OUT)/%.amv: $(TMPOUT)/%/
 	@
